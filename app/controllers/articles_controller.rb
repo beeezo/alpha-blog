@@ -34,6 +34,7 @@ class ArticlesController < ApplicationController
 		else
 		render 'new'
 		end
+
 	end
 
 	def show
@@ -56,7 +57,7 @@ class ArticlesController < ApplicationController
 			permitted = params.require(:article).permit(:title, :description)
 		end
 		def require_same_user
-			if current_user != @article.user
+			if current_user != @article.user && !current_user.admim?
 				flash[:danger] = "You can only edit or delete your own article"
 				redirect_to root_path
 			end
